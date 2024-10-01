@@ -1,10 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 
-import "../form.css";
-
-
-export default function SignUpForm() {
-  let userData = [
+export default function SignInForm() {
+  const userData = [
     { username: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
     { username: "Ahmed@gmail.com", userPass: "enkdasdasdwnrwe$" },
     { username: "Wael@gmail.com", userPass: "q3q44324$" },
@@ -13,33 +11,29 @@ export default function SignUpForm() {
   const [formInputs, setFormInputs] = useState({
     email: "",
     password: "",
-    userData,
   });
-
-  // Update email input
+  const [errorMessage, setErrorMessage] = useState("");  
+  const navigate = useNavigate();
   function handleChangeEmailInput(e) {
     setFormInputs({ ...formInputs, email: e.target.value });
   }
 
-  // Update password input
   function handleChangePasswordInput(e) {
     setFormInputs({ ...formInputs, password: e.target.value });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    const newUser = {
-      username: formInputs.email,
-      userPass: formInputs.password,
-    };
 
-    // Add new user to userData array
-    setFormInputs({
-      ...formInputs,
-      userData: [...formInputs.userData, newUser], // Add the new user
-      email: "", // Reset email field
-      password: "", // Reset password field
-    });
+    const foundUser = userData.find(
+      (user) => user.username === formInputs.email && user.userPass === formInputs.password
+    );
+
+    if (foundUser) {
+      navigate("/")
+    } else {
+      setErrorMessage("Invalid login credentials. Please try again.");
+    }
   }
 
   return (
@@ -64,13 +58,13 @@ export default function SignUpForm() {
             alignItems: "center",
             flexDirection: "column",
             padding: "30px",
-            background: "rgba(88, 59, 255, 0.8",
+            background: "rgba(88, 59, 255, 0.8)",
             minHeight: "700px",
             marginBottom: "40px",
             borderRadius: "30px",
           }}
         >
-          <h1 style={{ marginBottom: "20px" }}>Sign Up Form </h1>
+          <h1 style={{ marginBottom: "20px" }}>Sign In Form</h1>
 
           <hr
             style={{
@@ -95,17 +89,21 @@ export default function SignUpForm() {
             onChange={handleChangePasswordInput}
           />
 
+          {/* عرض رسالة الخطأ إن وجدت */}
+          {errorMessage && (
+            <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
+          )}
+
           <button
             id="submit-loan-button"
             type="button"
             style={{
               marginTop: "20px",
-
               width: "100%",
               padding: "10px",
-              Border: "none",
+              border: "none",
             }}
-            onClick={(e) => handleSubmit(e)}
+            onClick={handleSubmit}
           >
             Submit
           </button>
@@ -113,6 +111,4 @@ export default function SignUpForm() {
       </form>
     </div>
   );
-
 }
- main
