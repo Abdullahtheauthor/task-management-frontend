@@ -1,5 +1,14 @@
+import { useState } from "react";
 import "../task.css";
-export default function CreateTask({ open }) {
+export default function CreateTask({ open, onClose }) {
+  const [taskForm, setTaskForm] = useState({
+    title: "",
+    Assignee: "",
+    status: "Done",
+    estimate: "",
+    tag: "",
+    Description: "",
+  });
   return (
     <form
       style={{
@@ -36,9 +45,10 @@ export default function CreateTask({ open }) {
         <div style={{ display: "flex", marginBottom: "20px" }}>
           <label>Title</label>
           <input
-
-          //   value={formInputs.userPass}
-          //   onChange={handleChangePasswordInput}
+            value={taskForm.title}
+            onChange={(e) => {
+              setTaskForm({ ...taskForm, title: e.target.value });
+            }}
           />
         </div>
         {/* //title */}
@@ -46,53 +56,78 @@ export default function CreateTask({ open }) {
         {/* Assigne */}
         <div style={{ display: "flex", marginBottom: "20px" }}>
           <label>Assignee: </label>
-          <select id="status">
-            <option value="">Goda</option>
-            <option value="">Nira</option>
-            <option value="">Sousannah</option>
-            <option value="">Hania</option>
-            <option value="">Basel</option>
-            <option value="">Mohand</option>
+          <select
+            value={taskForm.Assignee}
+            onChange={(e) => {
+              // console.log()
+              setTaskForm({ ...taskForm, Assignee: e.target.value });
+            }}
+          >
+            <option value="Goda">Goda</option>
+            <option value="Nira">Nira</option>
+            <option value="Sousannah">Sousannah</option>
+            <option value="Hania">Hania</option>
+            <option value="Basel">Basel</option>
+            <option value="Mohand">Mohand</option>
           </select>
         </div>
         {/* // Assigne */}
+
+        {/* Status options */}
         <div style={{ display: "flex", marginBottom: "20px" }}>
           <label>Status: </label>
-          <select id="status">
-            <option value="">To Do</option>
-            <option value="">In progress</option>
-            <option value="">Blocked</option>
-            <option value="">Done</option>
+          <select
+            value={taskForm.status}
+            onChange={(e) => {
+              // console.log()
+              setTaskForm({ ...taskForm, status: e.target.value });
+            }}
+          >
+            <option value="To Do">To Do</option>
+            <option value="In progress">In progress</option>
+            <option value="Blocked">Blocked</option>
+            <option value="Done">Done</option>
           </select>
         </div>
 
         <div style={{ display: "flex", marginBottom: "20px" }}>
           <label>Estimate</label>
           <input
+            value={taskForm.estimate}
+            onChange={(e) => {
+              setTaskForm({ ...taskForm, estimate: e.target.value });
+            }}
 
-          //   value={formInputs.userPass}
-          //   onChange={handleChangePasswordInput}
+            //   value={formInputs.userPass}
+            //   onChange={handleChangePasswordInput}
           />
         </div>
 
         <div style={{ display: "flex", marginBottom: "20px" }}>
           <label>Tags</label>
           <input
-
-          //   value={formInputs.userPass}
-          //   onChange={handleChangePasswordInput}
+            value={taskForm.tag}
+            onChange={(e) => {
+              setTaskForm({ ...taskForm, tag: e.target.value });
+            }}
           />
         </div>
-
+        {/* Description text area */}
         <label>Description</label>
         <textarea
           rows="4"
           cols="47"
           name="comment"
           form="usrform"
-          value=""
+          value={taskForm.Description}
+          onChange={(e) => {
+            setTaskForm({ ...taskForm, Description: e.target.value });
+          }}
         ></textarea>
 
+        {/*///  Description text area */}
+
+        {/* Sumbit Button */}
         <button
           id="submit-loan-button"
           type="button"
@@ -106,6 +141,7 @@ export default function CreateTask({ open }) {
         >
           Submit
         </button>
+        {/* //Sumbit Button */}
 
         {/* Cancel button */}
         <button
@@ -117,7 +153,7 @@ export default function CreateTask({ open }) {
             padding: "10px",
             Border: "none",
           }}
-          //   onClick={(e) => handleSubmit(e)}
+          onClick={onClose}
         >
           Cancel
         </button>

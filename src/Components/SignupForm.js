@@ -29,9 +29,7 @@ export default function SignUpForm() {
     console.log(userData);
     console.log(formInputs);
     const foundUser = userData.find(
-      (user) =>
-        user.userName === formInputs.userName &&
-        user.userPass === formInputs.userPass
+      (user) => user.userName === formInputs.userName
     );
     console.log(foundUser);
 
