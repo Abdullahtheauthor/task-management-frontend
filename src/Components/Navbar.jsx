@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import Button from './Button';
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const toggleMenu = () => {
@@ -21,9 +21,10 @@ const Navbar = () => {
             <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
               <li><Link to="/" onClick={handleLinkClick}>Home</Link></li>
               <li><Link to="/pricing" onClick={handleLinkClick}>Pricing</Link></li>
-              <li><Link to="/signup" onClick={handleLinkClick}>Sign Up</Link></li>
-              <li><Link to="/signin" onClick={handleLinkClick}>Sign In</Link></li>
+              {/* <li><Link to="/signup" onClick={handleLinkClick}>Sign Up</Link></li>
+              <li><Link to="/signin" onClick={handleLinkClick}>Sign In</Link></li> */}
             </ul>
+            <Button/>
           </nav>
           </>);
           };
