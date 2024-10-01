@@ -18,13 +18,14 @@ const Navbar = () => {
             <div className="menu-icon" onClick={toggleMenu}>
               <FontAwesomeIcon icon={faBars} />
             </div>
+            <div className="navbar-title">
             <ul className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
               <li><Link to="/" onClick={handleLinkClick}>Home</Link></li>
               <li><Link to="/pricing" onClick={handleLinkClick}>Pricing</Link></li>
               {/* <li><Link to="/signup" onClick={handleLinkClick}>Sign Up</Link></li>
               <li><Link to="/signin" onClick={handleLinkClick}>Sign In</Link></li> */}
             </ul>
-            <Button/>
+            <Button/></div>
           </nav>
           </>);
           };
