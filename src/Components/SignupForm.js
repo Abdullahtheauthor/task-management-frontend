@@ -1,44 +1,52 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../form.css";
 
 export default function SignUpForm() {
-  let userData = [
-    { username: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
-    { username: "Ahmed@gmail.com", userPass: "enkdasdasdwnrwe$" },
-    { username: "Wael@gmail.com", userPass: "q3q44324$" },
-  ];
-
-  const [formInputs, setFormInputs] = useState({
-    email: "",
-    password: "",
-    userData,
-  });
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState([
+    { userName: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
+    { userName: "Ahmed@gmail.com", userPass: "enkdasdasdwnrwe$" },
+    { userName: "Wael@gmail.com", userPass: "q3q44324$" },
+  ]);
+  const [formInputs, setFormInputs] = useState({ userName: "", userPass: "" });
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Update email input
   function handleChangeEmailInput(e) {
-    setFormInputs({ ...formInputs, email: e.target.value });
+    setFormInputs({ ...formInputs, userName: e.target.value });
   }
 
   // Update password input
   function handleChangePasswordInput(e) {
-    setFormInputs({ ...formInputs, password: e.target.value });
+    setFormInputs({ ...formInputs, userPass: e.target.value });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    const newUser = {
-      username: formInputs.email,
-      userPass: formInputs.password,
-    };
 
-    // Add new user to userData array
-    setFormInputs({
-      ...formInputs,
-      userData: [...formInputs.userData, newUser], // Add the new user
-      email: "", // Reset email field
-      password: "", // Reset password field
-    });
+    console.log(userData);
+    console.log(formInputs);
+    const foundUser = userData.find(
+      (user) =>
+        user.userName === formInputs.userName &&
+        user.userPass === formInputs.userPass
+    );
+    console.log(foundUser);
+
+    if (!foundUser) {
+      setUserData([
+        ...userData,
+        { userName: formInputs.userName, userPass: formInputs.userPass },
+      ]);
+      navigate("/board");
+
+      setErrorMessage(""); // Clear error if successfully added
+      console.log("User added:", formInputs);
+    } else {
+      setErrorMessage("User already exists");
+    }
   }
 
   return (
@@ -83,14 +91,14 @@ export default function SignUpForm() {
           <label>User Email</label>
           <input
             type="email"
-            value={formInputs.email}
+            value={formInputs.userName}
             onChange={handleChangeEmailInput}
           />
 
           <label>User Password</label>
           <input
             type="password"
-            value={formInputs.password}
+            value={formInputs.userPass}
             onChange={handleChangePasswordInput}
           />
 
@@ -108,6 +116,11 @@ export default function SignUpForm() {
           >
             Submit
           </button>
+
+          {/* عرض رسالة الخطأ إن وجدت */}
+          {errorMessage && (
+            <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
+          )}
         </div>
       </form>
     </div>
