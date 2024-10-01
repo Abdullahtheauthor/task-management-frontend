@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import "../form.css";
 
-
 export default function SignUpForm() {
   let userData = [
     { username: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
@@ -113,6 +112,4 @@ export default function SignUpForm() {
       </form>
     </div>
   );
-
 }
- main

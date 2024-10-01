@@ -4,6 +4,7 @@ import React from "react";
 import HomePage from "./Pages/HomePage";
 import Navbar from "./Components/Navbar";
 import SignupForm from "./Components/SignupForm.js";
+import SigninForm from "./Components/SigninForm.jsx";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Signup" element={<SignupForm />} />
- main
+          <Route path="/Signin" element={<SigninForm />} />
         </Routes>
       </>
     </BrowserRouter>
