@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
+// import { useState } from "react";
+// import { UserContext } from "./Contexts/UserContext.js";
+
 import "../form.css";
+import { UserContext } from "../Contexts/UserContext";
 
 export default function SignUpForm() {
   const navigate = useNavigate();
-  const [userData, setUserData] = useState([
-    { userName: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
-    { userName: "Ahmed@gmail.com", userPass: "enkdasdasdwnrwe$" },
-    { userName: "Wael@gmail.com", userPass: "q3q44324$" },
-  ]);
+
+  const { userData, setUserData } = useContext(UserContext);
+  console.log("123users", userData);
+
   const [formInputs, setFormInputs] = useState({ userName: "", userPass: "" });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -26,7 +29,7 @@ export default function SignUpForm() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(userData);
+    console.log("users", userData);
     console.log(formInputs);
     const foundUser = userData.find(
       (user) => user.userName === formInputs.userName
@@ -38,6 +41,8 @@ export default function SignUpForm() {
         ...userData,
         { userName: formInputs.userName, userPass: formInputs.userPass },
       ]);
+      console.log("users after set", userData);
+
       navigate("/board");
 
       setErrorMessage(""); // Clear error if successfully added
@@ -101,7 +106,6 @@ export default function SignUpForm() {
           />
 
           <button
-            id="submit-loan-button"
             type="button"
             style={{
               marginTop: "20px",
