@@ -11,7 +11,8 @@ export default function Todo({ todo }) {
           padding: "30px",
           background: "rgb(232,232,232)",
           width: "400px", // Width of each todo card
-          minHeight: "400px",
+          height: "900px",
+          // maxHeight:
           marginBottom: "20px", // Space between rows
           borderRadius: "10px",
           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
@@ -61,7 +62,24 @@ export default function Todo({ todo }) {
 
         {/* Description text area */}
         <label>Description:</label>
-        <label>{todo.description}</label>
+        <div
+          style={{
+            width: "300px" /* Set width */,
+            height: "150px" /* Set height */,
+            padding: "10px" /* Add padding */,
+            border: "1px solid #ccc " /* Border to mimic textarea */,
+            borderRadius: "4px" /* Rounded corners */,
+            backgroundColor: "#f8f8f8" /* Background color */,
+            overflowY: "scroll" /* Vertical scrollbar */,
+            whiteSpace: "pre-wrap " /* Keep line breaks and spaces */,
+          }}
+        >
+          {" "}
+          {todo.description}
+        </div>
+        {/* <textarea style={{ width: "300px", height: "100px" }}>
+          {todo.description}
+        </textarea> */}
 
         {/*///  Description text area */}
 

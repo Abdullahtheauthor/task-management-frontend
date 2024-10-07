@@ -32,23 +32,10 @@ export default function Board() {
     return <Todo key={t.id} todo={t}></Todo>;
   });
 
+  // Filter Buttons
   const buttonsFilter = userData.map((u) => {
     return <FilteredButton value={u.userName}></FilteredButton>;
   });
-  // Filter Buttons
-  // const assigneeArray = todos.map((t) => {
-  //   return t.assignee;
-  // });
-  // console.log(",,,,==========", assigneeArray);
-  // const nonDuplicateAssignee = assigneeArray.filter(
-  //   (item, index) => assigneeArray.indexOf(item) === index
-  // );
-
-  // console.log("nonDuplicateAssignee", nonDuplicateAssignee);
-  // const buttonFilter = nonDuplicateAssignee.map((a) => {
-  //   // console.log("=======", t.assignee);
-  //   return <FilteredButton value={a}></FilteredButton>;
-  // });
 
   return (
     <div style={{ marginBottom: "200px" }}>

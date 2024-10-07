@@ -53,10 +53,29 @@ const todosIntial = [
   },
   {
     id: uid(7),
-    title: "Task3",
+    title: "Task4",
+    description:
+      "asdnlkasnfjklhsdfjk knadsbfkjabsdjkfbsdmnf knknbsdaknc aknsbdfjk askndf kjasd fmndsa fknsdabvfjkbdsafkmsdamfbjksad fmnadsf jnksdajkfbasdkj f,msdafbkjsdbfknmsad fmnbvsadjkfgjkasd fmn,sdafbk nsgadjkfbksjadf kmsbfkjls",
+    assignee: "Ahmed@gmail.com",
+    status: false,
+    estimate: "2",
+    tags: ["front", "back"],
+  },
+  {
+    id: uid(7),
+    title: "Task5",
     description:
       "Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3Studying something 3",
-    assignee: "Ahmed@gmail.com",
+    assignee: "Wael@gmail.com",
+    status: false,
+    estimate: "2",
+    tags: ["front", "back"],
+  },
+  {
+    id: uid(7),
+    title: "Task3",
+    description: "Studying something 3",
+    assignee: "Wael@gmail.com",
     status: false,
     estimate: "2",
     tags: ["front", "back"],
