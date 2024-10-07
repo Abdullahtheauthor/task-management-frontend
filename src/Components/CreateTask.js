@@ -15,6 +15,7 @@ export default function CreateTask({ open, onClose }) {
         padding: "20px",
         height: "100vh",
         width: "500px",
+        background: "green",
       }}
     >
       <div
@@ -145,7 +146,6 @@ export default function CreateTask({ open, onClose }) {
 
         {/* Cancel button */}
         <button
-          id="submit-loan-button"
           type="button"
           style={{
             marginTop: "20px",
