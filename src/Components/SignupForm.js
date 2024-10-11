@@ -1,9 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import { useState } from "react";
-// import { UserContext } from "./Contexts/UserContext.js";
-
 import "../form.css";
 import { UserContext } from "../Contexts/UserContext";
 

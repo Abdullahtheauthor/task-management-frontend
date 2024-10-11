@@ -88,6 +88,7 @@ function App() {
     { userName: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
     { userName: "Ahmed@gmail.com", userPass: "enkdasdasdwnrwe$" },
     { userName: "Wael@gmail.com", userPass: "q3q44324$" },
+    { userName: "gyjy@gmail.com", userPass: "q3q44324$" },
   ];
   // saving todos to locastorage
   localStorage.setItem("todos", JSON.stringify(todosIntial));
