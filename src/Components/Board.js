@@ -19,6 +19,12 @@ export default function Board() {
   function handleCancelButtonInCreateTask() {
     setCreateTaskOpen(false);
   }
+  function handleSubmitlButtonInCreateTask(newTask) {
+    // setCreateTaskOpen(false);
+    alert(typeof newTask.tags);
+    setTodos([...todos, newTask]);
+    setCreateTaskOpen(false);
+  }
 
   const handleCreateTaskButton = () => {
     setCreateTaskOpen(true);
@@ -38,7 +44,12 @@ export default function Board() {
   });
 
   return (
-    <div style={{ marginBottom: "200px" }}>
+    <div
+      style={{
+        marginBottom: "200px",
+        background: isCreateTaskOpen ? "rgba(90, 70, 225, 0.5)" : "none",
+      }}
+    >
       <div style={{ background: "rgb(200,232,232)", width: "100%" }}>
         {buttonsFilter}
 
@@ -54,27 +65,28 @@ export default function Board() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          margin: "10px",
         }}
       >
         {isCreateTaskOpen && (
           <CreateTask
             open={isCreateTaskOpen}
             onClose={handleCancelButtonInCreateTask}
+            submit={handleSubmitlButtonInCreateTask}
           />
         )}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap", // Allow items to wrap to the next line
-            justifyContent: "flex-start", // Align items to the start
-            gap: "20px", // Space between todos
-            width: "100%", // Full width of the parent
-          }}
-        >
-          {jsxTodos}
-          {/* {buttonFilter} */}
-        </div>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap", // Allow items to wrap to the next line
+          justifyContent: "flex-start", // Align items to the start
+          gap: "20px", // Space between todos
+          width: "100%", // Full width of the parent
+        }}
+      >
+        {jsxTodos}
+        {/* {buttonFilter} */}
       </div>
     </div>
   );
