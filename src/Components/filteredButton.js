@@ -10,7 +10,11 @@ export default function FilteredButton({ value }) {
     // Get todos from DB
     let todoDb = JSON.parse(localStorage.getItem("todos"));
     let filteredTodo = todoDb.filter((t) => {
-      return t.assignee == value;
+      if (value === "All") {
+        return t.assignee;
+      } else {
+        return t.assignee == value;
+      }
     });
     // console.log(filteredTodo);
     setTodos(filteredTodo);
@@ -31,7 +35,6 @@ export default function FilteredButton({ value }) {
         }}
         onClick={handleFilterClick}
         // onClick={onClose}
-        value={value}
       >
         {value}
       </button>

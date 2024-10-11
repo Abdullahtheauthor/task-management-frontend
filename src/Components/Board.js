@@ -52,6 +52,7 @@ export default function Board() {
     >
       <div style={{ background: "rgb(200,232,232)", width: "100%" }}>
         {buttonsFilter}
+        <FilteredButton value="All"></FilteredButton>
 
         <button
           style={{ marginLeft: "100px" }}
