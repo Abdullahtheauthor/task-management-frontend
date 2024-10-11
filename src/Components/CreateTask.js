@@ -1,12 +1,10 @@
 import { useState, useContext, useRef, useEffect } from "react";
 import "../task.css";
 import { TodosContext } from "../Contexts/TodosContext";
-import Todo from "./Todo";
+
 import { uid } from "uid";
 
 export default function CreateTask({ open, onClose, submit }) {
-  const { todos, setTodos } = useContext(TodosContext);
-  const [submitState, setSubmitState] = useState("true");
   const modalRef = useRef();
 
   const handleSumbit = () => {
