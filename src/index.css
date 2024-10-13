@@ -139,3 +139,9 @@ label{
   background-color: #1976D2; 
 }
 
+.auth-button.signout {
+  background-color: #2196F3; 
+}
+.auth-button.signout:hover {
+  background-color: #1976D2; 
+}
