@@ -5,8 +5,8 @@ import HomePage from "./Pages/HomePage";
 import Navbar from "./Components/Navbar";
 import SignupForm from "./Components/SignupForm.js";
 import SigninForm from "./Components/SigninForm.jsx";
-
 import { uid } from "uid";
+// import { AuthProvider } from '../Contexts/AuthContext'; // تأكد من استيراد الـ Context
 
 import { TodosContext } from "./Contexts/TodosContext";
 
@@ -99,6 +99,7 @@ function App() {
 
   return (
     //
+
     <BrowserRouter>
       <UserContext.Provider value={{ userData, setUserData }}>
         <TodosContext.Provider value={{ todos, setTodos }}>
@@ -115,6 +116,7 @@ function App() {
         </TodosContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
+
   );
 }
 

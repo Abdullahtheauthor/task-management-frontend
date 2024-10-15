@@ -1,38 +1,46 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+
+
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import "../form.css"; // Assuming the same styling as your sign-up form
+import { UserContext } from "../Contexts/UserContext";
 
 export default function SignInForm() {
-  const userData = [
-    { username: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
-    { username: "Ahmed@gmail.com", userPass: "enkdasdasdwnrwe$" },
-    { username: "Wael@gmail.com", userPass: "q3q44324$" },
-  ];
-
-  const [formInputs, setFormInputs] = useState({
-    email: "",
-    password: "",
-  });
-  const [errorMessage, setErrorMessage] = useState("");  
   const navigate = useNavigate();
+
+  const { userData } = useContext(UserContext); // Assuming UserContext contains user data
+  console.log("Existing users", userData);
+
+  const [formInputs, setFormInputs] = useState({ userName: "", userPass: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Update email input
   function handleChangeEmailInput(e) {
-    setFormInputs({ ...formInputs, email: e.target.value });
+    setFormInputs({ ...formInputs, userName: e.target.value });
   }
 
+  // Update password input
   function handleChangePasswordInput(e) {
-    setFormInputs({ ...formInputs, password: e.target.value });
+    setFormInputs({ ...formInputs, userPass: e.target.value });
   }
 
+  // Handle sign-in form submission
   function handleSubmit(e) {
     e.preventDefault();
 
     const foundUser = userData.find(
-      (user) => user.username === formInputs.email && user.userPass === formInputs.password
+      (user) =>
+        user.userName === formInputs.userName &&
+        user.userPass === formInputs.userPass
     );
 
     if (foundUser) {
-      navigate("/")
+      setErrorMessage(""); // Clear error if login is successful
+      console.log("User signed in:", formInputs);
+      navigate("/board"); // Redirect to dashboard or another page
     } else {
-      setErrorMessage("Invalid login credentials. Please try again.");
+      setErrorMessage("Invalid username or password");
     }
   }
 
@@ -58,7 +66,7 @@ export default function SignInForm() {
             alignItems: "center",
             flexDirection: "column",
             padding: "30px",
-            background: "rgba(88, 59, 255, 0.8)",
+            background: "rgba(88, 59, 255, 0.8",
             minHeight: "700px",
             marginBottom: "40px",
             borderRadius: "30px",
@@ -78,35 +86,34 @@ export default function SignInForm() {
           <label>User Email</label>
           <input
             type="email"
-            value={formInputs.email}
+            value={formInputs.userName}
             onChange={handleChangeEmailInput}
           />
 
           <label>User Password</label>
           <input
             type="password"
-            value={formInputs.password}
+            value={formInputs.userPass}
             onChange={handleChangePasswordInput}
           />
 
-          {/* عرض رسالة الخطأ إن وجدت */}
-          {errorMessage && (
-            <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
-          )}
-
           <button
-            id="submit-loan-button"
             type="button"
             style={{
               marginTop: "20px",
               width: "100%",
               padding: "10px",
-              border: "none",
+              Border: "none",
             }}
-            onClick={handleSubmit}
+            onClick={(e) => handleSubmit(e)}
           >
             Submit
           </button>
+
+          {/* Display error message if credentials are incorrect */}
+          {errorMessage && (
+            <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
+          )}
         </div>
       </form>
     </div>
