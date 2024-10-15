@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import CreateTask from "./CreateTask";
 import "../task.css";
@@ -15,14 +15,19 @@ export default function Board() {
   const { todos, setTodos } = useContext(TodosContext);
   const { userData, setUserData } = useContext(UserContext);
 
+  console.log("Inside board ", todos);
+
   // Handling create and cancel create task button
   function handleCancelButtonInCreateTask() {
     setCreateTaskOpen(false);
   }
   function handleSubmitlButtonInCreateTask(newTask) {
     // setCreateTaskOpen(false);
-    alert(typeof newTask.tags);
-    setTodos([...todos, newTask]);
+    // alert(typeof newTask.tags);
+    const updatedTodos = [...todos, newTask];
+    setTodos(updatedTodos);
+    console.log("updatedTodos", updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setCreateTaskOpen(false);
   }
 
@@ -32,6 +37,11 @@ export default function Board() {
     navigate("/board");
   };
   // Handling create and cancel create task button
+
+  useEffect(() => {
+    const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
+    setTodos(storageTodos);
+  }, []);
 
   // Rendering todos
   const jsxTodos = todos.map((t) => {
