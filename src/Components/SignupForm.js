@@ -23,8 +23,39 @@ export default function SignUpForm() {
     setFormInputs({ ...formInputs, userPass: e.target.value });
   }
 
+  // Helper function to validate email format
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  // Helper function to validate password criteria
+  function isValidPassword(password) {
+    const errors = [];
+    if (password.length < 8)
+      errors.push("Password must be at least 8 characters long");
+    if (!/[A-Z]/.test(password))
+      errors.push("Password must contain at least one uppercase letter");
+    if (!/[0-9]/.test(password))
+      errors.push("Password must contain at least one number");
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
+      errors.push("Password must contain at least one special character");
+
+    return errors;
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
+    if (!isValidEmail(formInputs.userName)) {
+      setErrorMessage("Invalid email format");
+      return; // Stop form submission if email is invalid
+    }
+
+    const passwordErrors = isValidPassword(formInputs.userPass);
+    if (passwordErrors.length > 0) {
+      setErrorMessage(passwordErrors.join(". "));
+      return; // Stop form submission if password is invalid
+    }
 
     console.log("users", userData);
     console.log(formInputs);

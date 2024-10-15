@@ -85,13 +85,14 @@ const todosIntial = [
 function App() {
   const [todos, setTodos] = useState(todosIntial);
   let userdetails = [
-    { userName: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
-    { userName: "Ahmed@gmail.com", userPass: "enkdasdasdwnrwe$" },
-    { userName: "Wael@gmail.com", userPass: "q3q44324$" },
-    { userName: "gyjy@gmail.com", userPass: "q3q44324$" },
+    { userName: "Abdullah", userPass: "enkdwnrwe$" },
+    { userName: "Sousannah", userPass: "enkdasdasdwnrwe$" },
+    { userName: "Basel", userPass: "q3q44324$" },
+    { userName: "Nira", userPass: "q3q44324$" },
+    { userName: "Hania", userPass: "qasdsadasd3q44324$" },
   ];
   // saving todos to locastorage
-  localStorage.setItem("todos", JSON.stringify(todosIntial));
+  // localStorage.setItem("todos", JSON.stringify(todosIntial));
   const [userData, setUserData] = useState(userdetails);
   // console.log("khjkhwk", userData);
   console.log("users after set", userData);
