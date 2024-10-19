@@ -1,19 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import axios from "axios";  // Import axios to send requests
 
 export default function SignInForm() {
-  const userData = [
-    { username: "Abdullah@gmail.com", userPass: "enkdwnrwe$" },
-    { username: "Ahmed@gmail.com", userPass: "enkdasdasdwnrwe$" },
-    { username: "Wael@gmail.com", userPass: "q3q44324$" },
-  ];
-
   const [formInputs, setFormInputs] = useState({
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");  
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+
   function handleChangeEmailInput(e) {
     setFormInputs({ ...formInputs, email: e.target.value });
   }
@@ -22,34 +18,32 @@ export default function SignInForm() {
     setFormInputs({ ...formInputs, password: e.target.value });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    const foundUser = userData.find(
-      (user) => user.username === formInputs.email && user.userPass === formInputs.password
-    );
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/signin", {
+        email: formInputs.email,
+        password: formInputs.password,
+      });
 
-    if (foundUser) {
-      navigate("/")
-    } else {
+      if (response.status === 200) {
+        navigate("/");
+      }
+    } catch (error) {
       setErrorMessage("Invalid login credentials. Please try again.");
     }
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
       <form
         style={{
           padding: "20px",
           height: "100vh",
           width: "500px",
         }}
+        onSubmit={handleSubmit}
       >
         <div
           style={{
@@ -64,49 +58,21 @@ export default function SignInForm() {
             borderRadius: "30px",
           }}
         >
-          <h1 style={{ marginBottom: "20px" }}>Sign In Form</h1>
-
-          <hr
-            style={{
-              color: "black",
-              background: "red",
-              width: "100%",
-              marginBottom: "40px",
-            }}
-          />
-
-          <label>User Email</label>
+          <h1>Sign In Form</h1>
           <input
             type="email"
             value={formInputs.email}
             onChange={handleChangeEmailInput}
+            placeholder="Email"
           />
-
-          <label>User Password</label>
           <input
             type="password"
             value={formInputs.password}
             onChange={handleChangePasswordInput}
+            placeholder="Password"
           />
-
-          {/* عرض رسالة الخطأ إن وجدت */}
-          {errorMessage && (
-            <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
-          )}
-
-          <button
-            id="submit-loan-button"
-            type="button"
-            style={{
-              marginTop: "20px",
-              width: "100%",
-              padding: "10px",
-              border: "none",
-            }}
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>
