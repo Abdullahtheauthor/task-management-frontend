@@ -1,21 +1,17 @@
 
-
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import "../form.css"; // Assuming the same styling as your sign-up form
-import { UserContext } from "../Contexts/UserContext";
+import axios from "axios";  // Import axios to send requests
+import "../form.css";
 
 export default function SignInForm() {
+  const [formInputs, setFormInputs] = useState({
+    email: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const { userData } = useContext(UserContext); // Assuming UserContext contains user data
-  console.log("Existing users", userData);
-
-  const [formInputs, setFormInputs] = useState({ userName: "", userPass: "" });
-  const [errorMessage, setErrorMessage] = useState("");
-
-  // Update email input
   function handleChangeEmailInput(e) {
     setFormInputs({ ...formInputs, userName: e.target.value });
   }
@@ -25,39 +21,33 @@ export default function SignInForm() {
     setFormInputs({ ...formInputs, userPass: e.target.value });
   }
 
-  // Handle sign-in form submission
-  function handleSubmit(e) {
+  
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    const foundUser = userData.find(
-      (user) =>
-        user.userName === formInputs.userName &&
-        user.userPass === formInputs.userPass
-    );
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/signin", {
+        email: formInputs.email,
+        password: formInputs.password,
+      });
 
-    if (foundUser) {
-      setErrorMessage(""); // Clear error if login is successful
-      console.log("User signed in:", formInputs);
-      navigate("/board"); // Redirect to dashboard or another page
-    } else {
-      setErrorMessage("Invalid username or password");
+      if (response.status === 200) {
+        navigate("/");
+      }
+    } catch (error) {
+      setErrorMessage("Invalid login credentials. Please try again.");
     }
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
       <form
         style={{
           padding: "20px",
           height: "100vh",
           width: "500px",
         }}
+        onSubmit={handleSubmit}
       >
         <div
           style={{
@@ -72,31 +62,20 @@ export default function SignInForm() {
             borderRadius: "30px",
           }}
         >
-          <h1 style={{ marginBottom: "20px" }}>Sign In Form</h1>
-
-          <hr
-            style={{
-              color: "black",
-              background: "red",
-              width: "100%",
-              marginBottom: "40px",
-            }}
-          />
-
-          <label>User Email</label>
+          <h1>Sign In Form</h1>
           <input
             type="email"
             value={formInputs.userName}
             onChange={handleChangeEmailInput}
+            placeholder="Email"
           />
-
-          <label>User Password</label>
           <input
             type="password"
             value={formInputs.userPass}
             onChange={handleChangePasswordInput}
+            placeholder="Password"
           />
-
+              
           <button
             type="button"
             style={{
@@ -114,6 +93,7 @@ export default function SignInForm() {
           {errorMessage && (
             <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
           )}
+          
         </div>
       </form>
     </div>
