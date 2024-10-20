@@ -15,7 +15,7 @@ export default function Board() {
   const { todos, setTodos } = useContext(TodosContext);
   const { userData, setUserData } = useContext(UserContext);
 
-  console.log("Inside board ", todos);
+  // console.log("Inside board ", todos);
 
   // Handling create and cancel create task button
   function handleCancelButtonInCreateTask() {
@@ -26,9 +26,22 @@ export default function Board() {
     // alert(typeof newTask.tags);
     const updatedTodos = [...todos, newTask];
     setTodos(updatedTodos);
-    console.log("updatedTodos", updatedTodos);
+    // console.log("updatedTodos", updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     setCreateTaskOpen(false);
+  }
+
+  function handleSaveButtonInEdit(eidtedTask) {
+    const updatedTodos = todos.map((t) => {
+      if (eidtedTask.id === t.id) {
+        return eidtedTask;
+      } else {
+        return t;
+      }
+    });
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    console.log("editiiiing", updatedTodos);
+    setTodos(updatedTodos);
   }
 
   const handleCreateTaskButton = () => {
@@ -45,7 +58,7 @@ export default function Board() {
 
   // Rendering todos
   const jsxTodos = todos.map((t) => {
-    return <Todo key={t.id} todo={t}></Todo>;
+    return <Todo key={t.id} todo={t} save={handleSaveButtonInEdit}></Todo>;
   });
 
   // Filter Buttons

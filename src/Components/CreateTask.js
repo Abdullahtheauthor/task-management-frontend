@@ -142,9 +142,7 @@ export default function CreateTask({ open, onClose, submit }) {
               setTaskForm({ ...taskForm, status: e.target.value });
             }}
           >
-            <option value="" disabled hidden>
-              Select Status
-            </option>
+            <option value="">Select Status</option>
             <option value="To Do">To Do</option>
             <option value="In progress">In progress</option>
             <option value="Blocked">Blocked</option>
