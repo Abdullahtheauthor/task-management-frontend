@@ -1,6 +1,8 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";  // Import axios to send requests
+import "../form.css";
 
 export default function SignInForm() {
   const [formInputs, setFormInputs] = useState({
@@ -11,13 +13,15 @@ export default function SignInForm() {
   const navigate = useNavigate();
 
   function handleChangeEmailInput(e) {
-    setFormInputs({ ...formInputs, email: e.target.value });
+    setFormInputs({ ...formInputs, userName: e.target.value });
   }
 
+  // Update password input
   function handleChangePasswordInput(e) {
-    setFormInputs({ ...formInputs, password: e.target.value });
+    setFormInputs({ ...formInputs, userPass: e.target.value });
   }
 
+  
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -52,7 +56,7 @@ export default function SignInForm() {
             alignItems: "center",
             flexDirection: "column",
             padding: "30px",
-            background: "rgba(88, 59, 255, 0.8)",
+            background: "rgba(88, 59, 255, 0.8",
             minHeight: "700px",
             marginBottom: "40px",
             borderRadius: "30px",
@@ -61,18 +65,35 @@ export default function SignInForm() {
           <h1>Sign In Form</h1>
           <input
             type="email"
-            value={formInputs.email}
+            value={formInputs.userName}
             onChange={handleChangeEmailInput}
             placeholder="Email"
           />
           <input
             type="password"
-            value={formInputs.password}
+            value={formInputs.userPass}
             onChange={handleChangePasswordInput}
             placeholder="Password"
           />
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-          <button type="submit">Submit</button>
+              
+          <button
+            type="button"
+            style={{
+              marginTop: "20px",
+              width: "100%",
+              padding: "10px",
+              Border: "none",
+            }}
+            onClick={(e) => handleSubmit(e)}
+          >
+            Submit
+          </button>
+
+          {/* Display error message if credentials are incorrect */}
+          {errorMessage && (
+            <p style={{ color: "red", marginTop: "10px" }}>{errorMessage}</p>
+          )}
+          
         </div>
       </form>
     </div>

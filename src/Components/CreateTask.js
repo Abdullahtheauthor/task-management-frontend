@@ -1,31 +1,86 @@
-import { useState } from "react";
+import { useState, useContext, useRef, useEffect } from "react";
 import "../task.css";
-export default function CreateTask({ open, onClose }) {
+import { TodosContext } from "../Contexts/TodosContext";
+
+import { uid } from "uid";
+
+export default function CreateTask({ open, onClose, submit }) {
+  const modalRef = useRef();
+
+  const handleSumbit = () => {
+    // Transforming tags into an array whose elements separated by space
+    let tagsArray = [];
+    let tagString = "";
+    for (let letter of taskForm.tag) {
+      if (letter === " ") {
+        tagsArray.push(tagString);
+        tagString = "";
+      } else {
+        tagString += letter;
+      }
+    }
+    console.log(tagsArray);
+    // Transforming tags into an array whose elements separated by space
+
+    const newTask = {
+      id: uid(7),
+      title: taskForm.title,
+      description: taskForm.Description,
+      assignee: taskForm.Assignee,
+      status: taskForm.status,
+      estimate: taskForm.estimate,
+      tags: tagsArray,
+    };
+
+    submit(newTask);
+  };
+
   const [taskForm, setTaskForm] = useState({
     title: "",
     Assignee: "",
-    status: "Done",
+    status: "",
     estimate: "",
     tag: "",
     Description: "",
   });
+
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      onClose(); // Close the modal if clicked outside
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside); // Add event listener
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // Clean up
+    };
+  }, []);
+
   return (
     <form
+      ref={modalRef}
       style={{
+        className: "modal-overlay",
         padding: "20px",
+        width: "100vw",
         height: "100vh",
-        width: "500px",
-        background: "green",
+        background: "none",
+        position: "relative",
+        justifyContent: "center", // Center the form horizontally
+        alignItems: "center", // Center the form vertically
       }}
     >
       <div
         style={{
+          className: "modal-content",
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "flex-start",
           flexDirection: "column",
           padding: "30px",
-          background: "	rgb(232,232,232)",
+          background: "	rgb(90,400,300)",
           minHeight: "700px",
           marginBottom: "40px",
           borderRadius: "30px",
@@ -44,7 +99,7 @@ export default function CreateTask({ open, onClose }) {
 
         {/* title */}
         <div style={{ display: "flex", marginBottom: "20px" }}>
-          <label>Title</label>
+          <label>Title: </label>
           <input
             value={taskForm.title}
             onChange={(e) => {
@@ -64,6 +119,9 @@ export default function CreateTask({ open, onClose }) {
               setTaskForm({ ...taskForm, Assignee: e.target.value });
             }}
           >
+            <option value="" disabled hidden>
+              Select Assignee
+            </option>
             <option value="Goda">Goda</option>
             <option value="Nira">Nira</option>
             <option value="Sousannah">Sousannah</option>
@@ -84,6 +142,7 @@ export default function CreateTask({ open, onClose }) {
               setTaskForm({ ...taskForm, status: e.target.value });
             }}
           >
+            <option value="">Select Status</option>
             <option value="To Do">To Do</option>
             <option value="In progress">In progress</option>
             <option value="Blocked">Blocked</option>
@@ -98,9 +157,6 @@ export default function CreateTask({ open, onClose }) {
             onChange={(e) => {
               setTaskForm({ ...taskForm, estimate: e.target.value });
             }}
-
-            //   value={formInputs.userPass}
-            //   onChange={handleChangePasswordInput}
           />
         </div>
 
@@ -109,6 +165,8 @@ export default function CreateTask({ open, onClose }) {
           <input
             value={taskForm.tag}
             onChange={(e) => {
+              console.log("tags in create task", e.target.value);
+
               setTaskForm({ ...taskForm, tag: e.target.value });
             }}
           />
@@ -121,6 +179,7 @@ export default function CreateTask({ open, onClose }) {
           name="comment"
           form="usrform"
           value={taskForm.Description}
+          style={{ width: "100%", height: "100px", padding: "8px" }}
           onChange={(e) => {
             setTaskForm({ ...taskForm, Description: e.target.value });
           }}
@@ -136,9 +195,40 @@ export default function CreateTask({ open, onClose }) {
             marginTop: "20px",
             width: "100%",
             padding: "10px",
-            Border: "none",
+            backgroundColor: !(
+              taskForm.title &&
+              taskForm.Assignee &&
+              taskForm.estimate &&
+              taskForm.Description
+            )
+              ? "#ddd"
+              : "#4CAF50",
+            color: !(
+              taskForm.title &&
+              taskForm.Assignee &&
+              taskForm.estimate &&
+              taskForm.Description
+            )
+              ? "gray"
+              : "white",
+            cursor: !(
+              taskForm.title &&
+              taskForm.Assignee &&
+              taskForm.estimate &&
+              taskForm.Description
+            )
+              ? "not-allowed"
+              : "pointer",
           }}
-          //   onClick={(e) => handleSubmit(e)}
+          disabled={
+            !(
+              taskForm.title &&
+              taskForm.Assignee &&
+              taskForm.estimate &&
+              taskForm.Description
+            )
+          }
+          onClick={() => handleSumbit()}
         >
           Submit
         </button>
