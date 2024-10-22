@@ -36,14 +36,14 @@ export default function SignUpForm() {
     return errors;
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    if (!isValidEmail(formInputs.userName)) {
+    if (!isValidEmail(formInputs.email)) {
       setErrorMessage("Invalid email format");
       return; // Stop form submission if email is invalid
     }
 
-    const passwordErrors = isValidPassword(formInputs.userPass);
+    const passwordErrors = isValidPassword(formInputs.password);
     if (passwordErrors.length > 0) {
       setErrorMessage(passwordErrors.join(". "));
       return; // Stop form submission if password is invalid

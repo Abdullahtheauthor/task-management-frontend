@@ -9,6 +9,9 @@ import { UserContext } from "../Contexts/UserContext";
 import Todo from "./Todo";
 import FilteredButton from "./filteredButton";
 
+import axios from "axios";
+
+
 export default function Board() {
   const navigate = useNavigate(); // Initialize navigate
   const [isCreateTaskOpen, setCreateTaskOpen] = useState(false);
@@ -21,27 +24,29 @@ export default function Board() {
   function handleCancelButtonInCreateTask() {
     setCreateTaskOpen(false);
   }
-  function handleSubmitlButtonInCreateTask(newTask) {
-    // setCreateTaskOpen(false);
-    // alert(typeof newTask.tags);
-    const updatedTodos = [...todos, newTask];
-    setTodos(updatedTodos);
-    // console.log("updatedTodos", updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+
+  async function handleSubmitlButtonInCreateTask(newTask) {
+
+    const response = await axios.post("http://localhost:5000/api/tasks/createTask", {
+      newTask
+    })
+
+    if (response.status == 201){
+      const response = await axios.get("http://localhost:5000/api/tasks/getTasks") 
+      localStorage.setItem("todos" , JSON.stringify(response.data.tasks))
+    }
     setCreateTaskOpen(false);
   }
 
-  function handleSaveButtonInEdit(eidtedTask) {
-    const updatedTodos = todos.map((t) => {
-      if (eidtedTask.id === t.id) {
-        return eidtedTask;
-      } else {
-        return t;
-      }
-    });
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
-    console.log("editiiiing", updatedTodos);
-    setTodos(updatedTodos);
+  async function handleSaveButtonInEdit(editedTask) {
+    const response = await axios.post("http://localhost:5000/api/tasks/updateTask", {
+      editedTask
+    })
+    if (response.status == 201){
+      const response = await axios.get("http://localhost:5000/api/tasks/getTasks") 
+      localStorage.setItem("todos" , JSON.stringify(response.data.tasks))
+    }
+    
   }
 
   const handleCreateTaskButton = () => {
@@ -52,7 +57,7 @@ export default function Board() {
   // Handling create and cancel create task button
 
   useEffect(() => {
-    const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
+    const storageTodos = JSON.parse(localStorage.getItem("todos") ?? []);
     setTodos(storageTodos);
   }, []);
 

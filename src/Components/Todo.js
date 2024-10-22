@@ -1,6 +1,7 @@
 import { TodosContext } from "../Contexts/TodosContext";
 import { useContext, useState } from "react";
-import { uid } from "uid";
+
+import axios from "axios"
 
 export default function Todo({ todo, save }) {
   const { todos, setTodos } = useContext(TodosContext);
@@ -29,14 +30,14 @@ export default function Todo({ todo, save }) {
 
   const handleYesDeleteButton = () => {
     const updatedTodos = todos.filter((t) => {
-      return todo.id !== t.id;
+      return todo._id !== t._id;
     });
     localStorage.setItem("todos", JSON.stringify(updatedTodos));
     console.log("handleDeleteClick", updatedTodos);
     setTodos(updatedTodos);
   };
 
-  const handleSaveEditButton = () => {
+  async function handleSaveEditButton  () {
     let tagsArray = [];
     let tagString = "";
     for (let letter of taskForm.tag) {
@@ -58,7 +59,7 @@ export default function Todo({ todo, save }) {
 
     console.log(tagsArray);
     const newTask = {
-      id: todo.id,
+      _id: todo.id,
       title: taskForm.title,
       description: taskForm.Description,
       assignee: taskForm.Assignee,
@@ -67,7 +68,7 @@ export default function Todo({ todo, save }) {
       tags: tagsArray,
     };
 
-    save(newTask);
+    await save(newTask);
     setEditDialogue(false);
   };
   return (
@@ -245,23 +246,12 @@ export default function Todo({ todo, save }) {
               {/* Assigne */}
               <div style={{ display: "flex", marginBottom: "20px" }}>
                 <label>Assignee: </label>
-                <select
+                <input
                   value={taskForm.Assignee}
                   onChange={(e) => {
-                    // console.log()
                     setTaskForm({ ...taskForm, Assignee: e.target.value });
                   }}
-                >
-                  <option value="" disabled hidden>
-                    Select Assignee
-                  </option>
-                  <option value="Goda">Goda</option>
-                  <option value="Nira">Nira</option>
-                  <option value="Sousannah">Sousannah</option>
-                  <option value="Hania">Hania</option>
-                  <option value="Basel">Basel</option>
-                  <option value="Mohand">Mohand</option>
-                </select>
+                />
               </div>
               {/* // Assigne */}
 
