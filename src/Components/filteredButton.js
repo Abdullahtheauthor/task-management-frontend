@@ -13,7 +13,7 @@ export default function FilteredButton({ value }) {
       if (value === "All") {
         return t.assignee;
       } else {
-        return t.assignee == value;
+        return t.assignee === value;
       }
     });
     // console.log(filteredTodo);

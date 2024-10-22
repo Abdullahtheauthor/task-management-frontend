@@ -46,7 +46,7 @@ const AuthButtons = () => {
       ) : (
         <>
           <Link to="/signup" className="auth-button signup">Sign Up</Link>
-          <Link to="/signin" className="auth-button signin" onClick={handleLogin}>Sign In</Link>
+          <Link to="/signin" className="auth-button signin">Sign In</Link>
         </>
       )}
     </div>

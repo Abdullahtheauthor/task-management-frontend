@@ -7,7 +7,7 @@ import { uid } from "uid";
 export default function CreateTask({ open, onClose, submit }) {
   const modalRef = useRef();
 
-  const handleSumbit = () => {
+  async function handleSumbit  () {
     // Transforming tags into an array whose elements separated by space
     let tagsArray = [];
     let tagString = "";
@@ -19,20 +19,18 @@ export default function CreateTask({ open, onClose, submit }) {
         tagString += letter;
       }
     }
-    console.log(tagsArray);
     // Transforming tags into an array whose elements separated by space
 
     const newTask = {
-      id: uid(7),
       title: taskForm.title,
       description: taskForm.Description,
-      assignee: taskForm.Assignee,
+      assignee: "66f6f2e82dc6a754aa3b330c",
       status: taskForm.status,
       estimate: taskForm.estimate,
       tags: tagsArray,
     };
 
-    submit(newTask);
+    await submit(newTask);
   };
 
   const [taskForm, setTaskForm] = useState({

@@ -1,10 +1,12 @@
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";  // Import axios to send requests
-import "../form.css";
+import { UserContext } from "../Contexts/UserContext";
 
 export default function SignInForm() {
+  const { userData, setUserData } = useContext(UserContext);
+
   const [formInputs, setFormInputs] = useState({
     email: "",
     password: "",
@@ -13,12 +15,12 @@ export default function SignInForm() {
   const navigate = useNavigate();
 
   function handleChangeEmailInput(e) {
-    setFormInputs({ ...formInputs, userName: e.target.value });
+    setFormInputs({ ...formInputs, email: e.target.value });
   }
 
   // Update password input
   function handleChangePasswordInput(e) {
-    setFormInputs({ ...formInputs, userPass: e.target.value });
+    setFormInputs({ ...formInputs, password: e.target.value });
   }
 
   
@@ -26,13 +28,17 @@ export default function SignInForm() {
     e.preventDefault();
 
     try {
+      console.log("email  " + formInputs.email)
       const response = await axios.post("http://localhost:5000/api/auth/signin", {
         email: formInputs.email,
         password: formInputs.password,
       });
 
       if (response.status === 200) {
-        navigate("/");
+        const response = await axios.get("http://localhost:5000/api/tasks/getTasks") 
+        localStorage.setItem("todos" , JSON.stringify(response.data.tasks))
+        localStorage.setItem('isLoggedIn', 'true')
+        navigate("/board");
       }
     } catch (error) {
       setErrorMessage("Invalid login credentials. Please try again.");
